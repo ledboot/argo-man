@@ -13,11 +13,3 @@ func TestGenFile(t *testing.T) {
 	_ = e.Encode(Cfg)
 	fmt.Println(buff.String())
 }
-
-func TestLoadConfig(t *testing.T) {
-	GetBuildCfg().ConfigFile = "/home/dofun/syncthing/work/github/argo-man/config/simple.toml"
-	if err := LoadConfig(&Cfg); err != nil {
-		t.Fatal(err)
-	}
-	fmt.Println(Cfg)
-}

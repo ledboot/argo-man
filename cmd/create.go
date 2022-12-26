@@ -28,8 +28,8 @@ func createApp() {
 func doCreate(name string, info config.AppInfo) {
 	client := http.Client{Timeout: 5 * time.Second}
 
-	playLoad := fmt.Sprintf(`{"metadata":{"name":"%s"},"spec":{"destination":{"name":"%s","namespace":"%s","server":"https://kubernetes.default.svc"},"project":"%s","source":{"path":"%s","repoURL":"%s","targetRevision":"HEAD"},"syncPolicy":{"automated":{"prune":true}}}}`,
-		name, name, info.Namespace, info.Namespace, info.SourcePath, config.Cfg.RepoUrl)
+	playLoad := fmt.Sprintf(`{"metadata":{"name":"%s"},"spec":{"destination":{"namespace":"%s","server":"https://kubernetes.default.svc"},"project":"%s","source":{"path":"%s","repoURL":"%s","targetRevision":"HEAD"},"syncPolicy":{"automated":{"prune":true}}}}`,
+		name, info.Namespace, info.Namespace, info.SourcePath, config.Cfg.RepoUrl)
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/api/v1/applications", config.Cfg.ArgoConfig.Host), bytes.NewBuffer([]byte(playLoad)))
 	if err != nil {
 		panic(err)
@@ -44,4 +44,5 @@ func doCreate(name string, info config.AppInfo) {
 	if resp.StatusCode != http.StatusOK {
 		panic(fmt.Sprintf("create app %s failed, status code: %d", name, resp.StatusCode))
 	}
+	logger.Infof("create app %s success", name)
 }

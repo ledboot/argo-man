@@ -39,6 +39,15 @@ func InitArgs() {
 						return nil
 					},
 				},
+				{
+					Name:  "delete",
+					Usage: "delete an application. eg: delete serviceName",
+					Action: func(context *cli.Context) error {
+						//fmt.Println("delete an application", context.Args().First())
+						deleteAll()
+						return nil
+					},
+				},
 			},
 		},
 	}
